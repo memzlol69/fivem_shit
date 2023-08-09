@@ -8,12 +8,12 @@
 #include "registry.h"
 
 struct resource_impl {
-    char pad[0x48];
+    char pad[0x40];
     fwEvent<std::vector<char>*> onBeforeLoadScript;
 };
 
 bool executed = false;
-BOOL APIENTRY DllMain(uint64_t timer, DWORD reason_for_call) {
+BOOL APIENTRY DllMain(uint64_t, DWORD reason_for_call) {
     if (reason_for_call != DLL_PROCESS_ATTACH)
         return false;
 

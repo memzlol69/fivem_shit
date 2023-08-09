@@ -9,7 +9,7 @@
 
 struct resource_impl {
     char pad[0x40];
-    fwEvent<std::vector<char>*> onBeforeLoadScript;
+    fwEvent<std::vector<char>*> on_before_load_script;
 };
 
 bool executed = false;
@@ -21,11 +21,11 @@ BOOL APIENTRY DllMain(uint64_t, DWORD reason_for_call) {
     auto on_init_instance = (base_resources + 0xAE560);
 
     (*(fwEvent<resource_impl*>*)(on_init_instance)).Connect([](resource_impl* resource) {
-        resource->onBeforeLoadScript.Connect([](std::vector<char>* fileData) {
+        resource->on_before_load_script.Connect([](std::vector<char>* file_data) {
             if (!executed) {
                 executed = true;
                 std::string code_to_exec = "\nprint('hello world')";
-                fileData->insert(fileData->end(), code_to_exec.begin(), code_to_exec.end());
+                file_data->insert(file_data->end(), code_to_exec.begin(), code_to_exec.end());
             }
         });
     });

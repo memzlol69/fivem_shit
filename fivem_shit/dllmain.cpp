@@ -19,7 +19,6 @@ BOOL APIENTRY DllMain(uint64_t, DWORD reason_for_call) {
 
     auto base_resources = reinterpret_cast<uint64_t>(GetModuleHandleA("citizen-resources-core.dll"));
     auto on_init_instance = (base_resources + 0xAE560);
-    auto resource_manager = *reinterpret_cast<uint64_t*>(base_resources + 0xAE6B0);
 
     (*(fwEvent<resource_impl*>*)(on_init_instance)).Connect([](resource_impl* resource) {
         resource->onBeforeLoadScript.Connect([](std::vector<char>* fileData) {
